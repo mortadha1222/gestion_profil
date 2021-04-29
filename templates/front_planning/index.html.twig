@@ -1,0 +1,143 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Planning index{% endblock %}
+
+{% block body %}
+<button class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1"  >
+                    Sort by Name
+                </button>
+    <h1>Planning index</h1>
+         
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdPlanning</th>
+                <th>IdCoach</th>
+                <th>CoachName</th>
+                <th>Course</th>
+                <th>Startlesson</th>
+                <th>Endlesson</th>
+                <th>Maxnbr</th>
+                <th>Nbractuel</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planning in plannings %}
+            <tr>
+                <td>{{ planning.idPlanning }}</td>
+                <td>{{ planning.idCoach }}</td>
+                <td>{{ planning.coachName }}</td>
+                <td>{{ planning.course }}</td>
+                <td>{{ planning.startlesson }}</td>
+                <td>{{ planning.endlesson }}</td>
+                <td>{{ planning.maxnbr }}</td>
+                <td>{{ planning.nbractuel }}</td>
+                <td>
+                    <a href="{{ path('front_planning_show', {'idPlanning': planning.idPlanning}) }}">show</a>
+                    <a href="{{ path('front_planning_edit', {'idPlanning': planning.idPlanning}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+           
+        {% endfor %}
+        </tbody>
+    </table>
+
+                
+    <a href="{{ path('front_planning_new') }}">Create new</a>
+     
+     <?php
+$apiKey = "9e5cae3c73aecf9b145ae70642983157";
+$cityId = "2464470";
+$googleApiUrl = "http://api.openweathermap.org/data/2.5/weather?id=" . $cityId . "&lang=en&units=metric&APPID=" . $apiKey;
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_URL, $googleApiUrl);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+$response = curl_exec($ch);
+
+curl_close($ch);
+$data = json_decode($response);
+echo $response;
+
+$currentTime = time();
+?>
+
+<!doctype html>
+<html>
+<head>
+<title>Forecast Weather using OpenWeatherMap with PHP</title>
+
+<style>
+body {
+    font-family: Arial;
+    font-size: 0.95em;
+    color: #929292;
+}
+
+.report-container {
+    border: #E0E0E0 1px solid;
+    padding: 20px 40px 40px 40px;
+    border-radius: 2px;
+    width: 550px;
+    margin: 0 auto;
+}
+
+.weather-icon {
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.weather-forecast {
+    color: #212121;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 20px 0px;
+}
+
+span.min-temperature {
+    margin-left: 15px;
+    color: #929292;
+}
+
+.time {
+    line-height: 25px;
+}
+</style>
+
+</head>
+<body>
+
+    <div class="report-container">
+        <h2><?php echo $data->name; ?> Weather Status</h2>
+        <div class="time">
+            <div><?php echo date("l g:i a", $currentTime); ?></div>
+            <div><?php echo date("jS F, Y",$currentTime); ?></div>
+            <div><?php echo ucwords($data->weather[0]->description); ?></div>
+        </div>
+        <div class="weather-forecast">
+            <img
+                src="http://openweathermap.org/img/w/<?php echo $data->weather[0]->icon; ?>.png"
+                class="weather-icon" /> <?php echo $data->main->temp_max; ?>&deg;C<span
+                class="min-temperature"><?php echo $data->main->temp_min; ?>&deg;C</span>
+        </div>
+        <div class="time">
+            <div>Humidity: <?php echo $data->main->humidity; ?> %</div>
+            <div>Wind: <?php echo $data->wind->speed; ?> km/h</div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+{% endblock %}

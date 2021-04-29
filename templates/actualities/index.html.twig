@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualities index{% endblock %}
+
+{% block body %}
+    <h1>Actualities index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdAct</th>
+                <th>TitleAct</th>
+                <th>DateAct</th>
+                <th>DescriptionAct</th>
+                <th>PhotoAct</th>
+                <th>IdMember</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actuality in actualities %}
+            <tr>
+                <td>{{ actuality.idAct }}</td>
+                <td>{{ actuality.titleAct }}</td>
+                <td>{{ actuality.dateAct ? actuality.dateAct |date('Y-m-d') : ''}} </td>
+                <td>{{ actuality.descriptionAct }}</td>
+                <td> <img src="{{ asset('uploads/' ~ actuality.photoAct ) }}" class="fill" style="max-height: 150px; width: 120px;"></td>
+                <td>{{ actuality.idMember }}</td>
+                <td>
+                    <a href="{{ path('actualities_show', {'idAct': actuality.idAct}) }}">show</a>
+                    <a href="{{ path('actualities_edit', {'idAct': actuality.idAct}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('actualities_new') }}">Create new</a>
+{% endblock %}

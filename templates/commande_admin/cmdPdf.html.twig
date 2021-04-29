@@ -1,0 +1,29 @@
+{% block body %}
+    <h1>Commande</h1> <hr>
+
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Ref</th>
+            <td>{{ commandes.idCommande }}</td>
+        </tr>
+        <tr>
+            <th>UserName</th>
+            <td>{{ commandes.userName }}</td>
+        </tr>
+
+        <tr>
+            <th>AdresseLivraison</th>
+            <td>{{ commandes.adresseLivraison }}</td>
+        </tr>
+        <tr>
+            <th  class="text-right">Total : </th>
+            <td>{{ commandes.total }}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+<center>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+
+            }
+
+            table.center {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #footer {
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+
+            #footer p {
+                border-top: 2px solid #555555;
+                margin-top:10px;
+            }
+        </style>
+    </head>
+<h1> Event's list n° 77  </h1>
+
+<div class="table-responsive">
+
+    <table class="center" >
+        <thead>
+        <tr>
+
+<th> nom de l'evenement </th>
+<th> Date </th>
+<th> description </th 
+<th> id membre </th>
+</tr>
+        </thead>
+{% for events in events %}
+
+<tr>
+
+        <td>{{ events.nameEve}}</td>
+                <td>{{ events.dateEve ? events.dateEve |date('Y-m-d') : ''}}</td>
+            <td>{{ events.descriptionEve}}</td> 
+             <td>{{ events.idMember}}</td>
+             </tr>
+
+{% endfor %}
+
+
+
+
+        </tbody>
+
+    </table>
+
+    </div>
+
+    </div>
+    <div id="footer">
+        <p>Copyright © Local View. Trademarks belong to their respective owners. all rights reserved</p>
+    </div>
+    </center>

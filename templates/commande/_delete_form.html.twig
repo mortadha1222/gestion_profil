@@ -1,0 +1,16 @@
+
+<form method="post" action="{{ path('commande_delete', {'idCommande': commande.idCommande}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+   <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.idCommande) }}">
+
+
+   <button class="btn btn-danger">Delete</button>
+</form>
+
+<!--
+<i class="lnr lnr-trash" method="post" action="{{ path('commande_delete', {'idCommande': commande.idCommande}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande.idCommande) }}">
+<button class="btn">Delete</button>
+</i>
+
+   <i class="lnr lnr-trash"> </i>
+-->

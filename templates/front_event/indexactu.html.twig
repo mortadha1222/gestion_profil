@@ -1,0 +1,39 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Actualities index{% endblock %}
+
+{% block body %}
+    <h1>Actualities index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>IdAct</th>
+            <th>TitleAct</th>
+            <th>DateAct</th>
+            <th>DescriptionAct</th>
+            <th>PhotoAct</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for actuality in actualities %}
+            <tr>
+                <td>{{ actuality.idAct }}</td>
+                <td>{{ actuality.titleAct }}</td>
+                <td>{{ actuality.dateAct ? actuality.dateAct |date('Y-m-d') : ''}} </td>
+                <td>{{ actuality.descriptionAct }}</td>
+                <td> <img src="{{ asset('uploads/' ~ actuality.photoAct ) }}" class="fill" style="max-height: 150px; width: 120px;"></td>
+
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

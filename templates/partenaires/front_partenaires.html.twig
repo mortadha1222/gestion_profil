@@ -1,0 +1,30 @@
+{% block head %}
+    {% block stylesheets %}
+
+    {% endblock %}
+{% endblock %}
+{% extends 'front.html.twig' %}
+
+{% block title %}Partners index{% endblock %}
+{% block body %}
+
+    {% for partenaire in partenaires %}
+        <div class="produit_card">
+            <img class="product_image" src= "{{ partenaire.photo }}" />
+            <div class="product_info">
+
+                <div  class="product_title">{{ partenaire.nom }}</div>
+                <div class="product_description">{{ partenaire.description  }}</div>
+
+                <br/> <br/><br/><br/>
+                <div class="bottom_info">
+                    <div class="product_stock"> <a href="{{ partenaire.site }}">site web</a> </div>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp
+
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+    {{ knp_pagination_render(partenaires) }}
+{% endblock %}

@@ -1,0 +1,59 @@
+
+
+ <form>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>IdUser</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Adresse</th>
+            <th>Telephone</th>
+            <th>Email</th>
+            <th>Photo</th>
+            <th>Role</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+
+        <tbody id="all">
+        {% for user in users %}
+
+            <tr>
+                <td>{{ user.idUser }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.photo }}</td>
+                <td>{{ user.roles }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                window.print();
+            });
+
+        </script>
+        </tbody>
+        <tbody id="search">
+        </tbody>
+    </table>
+    </div>
+    </form>
+
+
+
+
+

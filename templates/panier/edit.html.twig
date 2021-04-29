@@ -1,0 +1,22 @@
+{% extends 'front.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
+{% block title %}Edit Panier{% endblock %}
+
+{% block body %}
+    <table>
+        <tr>
+            <td> <h1>Edit Quantity</h1></td>
+        </tr>
+        <tr>
+            <td> {{ include('panier/_form.html.twig', {'button_label': 'Update'}) }} </td>
+
+        </tr>
+
+        <tr>
+            <td>  <a href="{{ path('panier_controller_index') }}">
+                    <button class="btn btn-dark"> Back </button> </a></td>
+        </tr>
+
+
+    </table>
+{% endblock %}

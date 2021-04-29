@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning Table{% endblock %}
+
+{% block body %}
+
+    <h1>Planning Table</h1>
+
+
+
+    <table class="table" id="planning">
+        <thead>
+            <tr>
+                <th>Id Planning</th>
+                <th>Id Coach</th>
+                <th>Coach Name</th>
+                <th>Course</th>
+                <th>Start lesson</th>
+                <th>End lesson</th>
+                <th>Max nbr</th>
+                <th>Nbr actuel</th>
+                <th>more actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planning in plannings %}
+
+            <tr>
+                <td>{{ planning.idPlanning }}</td>
+                <td>{{ planning.idCoach }}</td>
+                <td>{{ planning.coachName }}</td>
+                <td>{{ planning.course }}</td>
+                <td>{{ planning.startlesson }}</td>
+                <td>{{ planning.endlesson }}</td>
+                <td>{{ planning.maxnbr }}</td>
+                <td>{{ planning.nbractuel }}</td>
+                <td>
+                    <i class="fas fa-thumbs-up" onclick="react(this,'.$data['planning_id'].', \'up\')"></i>
+                    <i class="fas fa-thumbs-down" onclick="react(this,'.$data['planning_id'].',\'down\')"></i>
+                    <a href="{{ path('planning_show', {'idPlanning': planning.idPlanning}) }}">see the liste</a>
+                    <a href="{{ path('planning_edit', {'idPlanning': planning.idPlanning}) }}">update</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('planning_new') }}">Create new</a>
+
+
+
+
+
+    <script>
+
+        $(document).ready(function() {
+            var table = $('#planning').DataTable();
+            $('#planning').on( 'click', 'tr', function () {
+
+                var data = table.row($(this).closest('tr')).data();
+                var id_planing = data[0];
+                console.log(data);
+                console.log(id_planing);
+                setReservation(id_planing);
+            });
+
+        } );
+
+        function setReservation(id_planing) {
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:8000/planning/new", //path
+                /*data: {
+                    'id_planing': id_planing
+                },
+                dataType: 'json',*/
+                success: function (data) {
+                    alert('ok');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Oops...',
+                        text: 'Something went wrong!'+data,
+                        footer: '<a href=http://127.0.0.1:8000/reservations>Wshow res?</a>'
+                    });
+                },
+                error: function (e) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href>Why do I have this issue?</a>'
+                    });
+                }
+            });
+        }
+        function react (caller ,planning_id, type){
+            $(caller).css('color','blue');
+        }
+
+
+    </script>
+
+    
+
+
+
+
+{% endblock %}
+
+

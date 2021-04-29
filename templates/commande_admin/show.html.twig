@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <h1>Commande</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Ref</th>
+                <td>{{ commande.idCommande }}</td>
+            </tr>
+           <tr>
+                <th>UserName</th>
+                <td>{{ commande.userName }}</td>
+            </tr>
+
+            <tr>
+                <th>AdresseLivraison</th>
+                <td>{{ commande.adresseLivraison }}</td>
+            </tr>
+            <tr>
+                <th  class="text-right">Total : </th>
+                <td>{{ commande.total }}</td>
+            </tr>
+
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td class="text-right">
+                <a href="{{ path('commande_admin_index') }}">   <button class="btn btn-light "> Back to list</button>  </a>
+            </td>
+            <td class="text-left">  {{ include('commande_admin/_delete_form.html.twig') }} </td>
+
+        </tr>
+        <tr>
+           <td>  <a href="{{ path('commande_admin_cmdPdf', {'idCommande': commande.idCommande}) }}">
+                   Imprimer</a>
+           </td>
+        </tr>
+        </tfoot>
+
+    </table>
+<table>
+
+
+</table>
+
+
+
+
+{% endblock %}

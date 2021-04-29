@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Events index{% endblock %}
+
+{% block body %}
+
+<div class="app-content">
+        <div class="side-app">
+            <div class="page-header">
+                <h4 class="page-title">Data Tables</h4>
+                
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Tables des reservations</div>
+                        </div>
+                        <div class="card-body">
+                        <div class="table-responsive">
+
+                                <table id="dataTable" class="table table-striped table-bordered" >
+
+    <h1>Events List</h1>
+    <form role="search" id="nav-search-form" method="post" action="{{ path('triEventsNom') }}">
+
+
+        <div class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+            <div class="btn-group btn-group-sm" aria-label="Set Select2 option">
+                <button class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1">
+                    Sort by Name
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdEvent</th>
+                <th>NameEve</th>
+                <th>DateEve</th>
+                <th>DescriptionEve</th>
+                <th>PhotoEve</th>
+                <th>IdMember</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.idEvent }}</td>
+                <td>{{ event.nameEve }}</td>
+                <td>{{ event.dateEve ? event.dateEve |date('Y-m-d') : ''}}</td>
+                <td>{{ event.descriptionEve }}</td>
+                <td> <img src="{{ asset('uploads/' ~ event.photoEve ) }}" class="fill" style="max-height: 150px; width: 120px;"></td>
+                <td>{{ event.idMember }}</td>
+                <td>
+                    <a href="{{ path('events_show', {'idEvent': event.idEvent}) }}">Show</a>
+                    <a href="{{ path('events_edit', {'idEvent': event.idEvent}) }}">Edit</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('events_new') }}">Create new</a>
+    <a href="{{ path('pdfevents') }}">Print</a>
+
+    {{ knp_pagination_render(events) }}
+
+    </div>
+
+                        </div>
+
+                        <!-- table-wrapper -->
+                    </div>
+                    <!-- section-wrapper -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

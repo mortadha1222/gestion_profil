@@ -1,0 +1,68 @@
+{% extends 'front.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
+{% block title %}Commande test{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h1>Order </h1>
+    <form method="POST">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="search..."
+               aria-label="title" aria-describedby="button-addon2" id="search" name="search"
+               required="required"><!--   <input type="text" name="search"> -->
+            <div class="input-group-append">
+                <input class="btn btn-outline-secondary" type="submit" value="search">
+            </div>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ref</th>
+           <!--     <th>UserName</th>
+                <th>VendorName</th> -->
+                <th>AdresseLivraison</th>
+                <th>Total</th>
+             <!--   <th>IdUser</th>
+                <th>IdVendor</th>
+                <th>actions</th> -->
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.idCommande }}</td>
+                <!--   <td>{{ commande.userName }}</td>
+                <td>{{ commande.vendorName }}</td> -->
+                <td>{{ commande.adresseLivraison }}</td>
+                <td>{{ commande.total }} TND</td>
+                <!--  <td>{{ commande.idUser }}</td>
+                <td>{{ commande.idVendor }}</td>  -->
+                <td>
+                      <a href="{{ path('commande_show', {'idCommande': commande.idCommande}) }}">Display</a>
+                    <!--    <a href="{{ path('commande_edit', {'idCommande': commande.idCommande}) }}">edit</a>
+
+                    <a href="{{ path('commande_delete', {'idCommande': commande.idCommande}) }}" class="btn btn-danger btn-sm">
+                        <i class="lnr lnr-trash"> </i>
+                    </a>   -->
+                     </td>
+                <td>
+                    {{ include('commande/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+    {{ knp_pagination_render(commandes) }}
+    <a href="{{ path('commande_new') }}">New order</a>
+{% endblock %}

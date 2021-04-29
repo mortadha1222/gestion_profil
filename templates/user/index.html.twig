@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>User index</h1>
+    <form role="search" id="nav-search-form" method="post" action="{{ path('trie_ASC') }}">
+
+
+        <div class="btn-toolbar" role="toolbar" aria-label="Programmatic control">
+            <div class="btn-group btn-group-sm" aria-label="Set Select2 option">
+                <button class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1">
+                    Sort by ID
+                </button>
+                <button class="js-programmatic-set-val btn btn-outline-primary mr-1 mb-1" onclick="print()">print</button>
+            </div>
+        </div>
+        <b href="{{ path('count_users') }}">users :</b>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdUser</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Adresse</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>Photo</th>
+                <th>Role</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <input type="text" id="search" class="form-control" placeholder="Search">
+
+        <tbody id="all">
+        {% for user in users %}
+
+            <tr>
+                <td>{{ user.idUser }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.photo }}</td>
+                <td>{{ user.roles }}</td>
+                <td>
+                    <a href="{{ path('user_show', {'idUser': user.idUser}) }}">show</a>
+                    <a href="{{ path('user_edit', {'idUser': user.idUser}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tbody id="search">
+    </tbody>
+    </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script>
+    $( document ).ready(function() {
+        $("#search").keyup(function(e){
+            /* La variable value va prendre la valeur insérer dans le champ de texte afin d’effectuer la recherche */
+            var value = $(this).val();
+            /* Ajax est lancé lors du remplissage du champ texte dont l’id est « search » pour faire la recherche */
+            $.ajax({
+                /* l’url est une chaine de caractères contenant l’adresse où la requête est envoyée */
+                url : "{{ path('searchUserx') }}",
+                /* La méthode utilisée pour transférer les données est GET */
+                type : 'GET',
+                /*Ici search value va prendre la chaine entrée par un utilisateur dans la zone de recherche et sera placée après l’url */
+                data: {
+                    'searchValue' : value
+                },
+                /*Cette fonction permet de vider le contenu du tableau pour recevoir le nouveau contenu*/
+                success : function(a){
+                    if(a){
+                        $('#t tbody#search').empty();
+                        $.each(JSON.parse(a), function(i,obj) {
+                            $('#t tbody#all').hide();
+ $('#t tbody#search').append('<tr><td>  '+obj.idUser+'  </td><td>    '+obj.username+'  </td><td>  '+obj.password+' </td><td>  '+obj.firstName+' </td><td>  '+obj.lastName+'  </td><td>  '+obj.adresse+' </td><td>  '+obj.telephone+' </td><td> '+obj.email+' </td><td>  '+obj.photo+' </td><td> '+obj.roles+' </td></tr>');
+                        });
+
+                    }
+                    else
+                    {
+                        $('#t tbody#all').show();
+                        $('#t tbody#search').empty();
+                        $('#t tbody#search').fadeIn('fast');
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+    <script>
+public function print()
+{
+    window.print();
+};
+
+    </script>
+    </tbody>
+{% endblock %}
+
+

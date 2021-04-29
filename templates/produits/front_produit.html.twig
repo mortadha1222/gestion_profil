@@ -1,0 +1,43 @@
+{% block head %}
+    {% block stylesheets %}
+
+    {% endblock %}
+{% endblock %}
+{% extends 'front.html.twig' %}
+
+{% block title %}Produits index{% endblock %}
+{% block body %}
+    <br/>
+    <br/><br/>
+
+    <div>
+        <label> Recherche : </label><input type=""text ff>
+    </div>
+<div>
+    {% for produit in produits %}
+        <div class="produit_card">
+            <img class="product_image" src= "{{ produit.photoProd }}"/>
+            <div class="product_info">
+
+                    <div  class="product_title">{{ produit.title }}</div>
+                    <div class="product_description">{{ produit.descriptionProd  }}</div>
+
+                <br/> <br/><br/><br/>
+                <div class="bottom_info">
+                    <div class="product_stock">stock:{{ produit.stock }}</div>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <div class="product_price"> price:{{ produit.price }} TND</div>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp
+                    &nbsp &nbsp &nbsp &nbsp &nbsp
+                    &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <div> <a href="{{ path('panier_ajouter',{'idProduct': produit.idProduct}) }}" >
+                           <h3><i class="lnr lnr-cart"></i></h3>
+                        </a></div>
+                </div>
+            </div>
+
+        </div>
+    {% endfor %}
+    {{ knp_pagination_render(produits) }}
+    </div>
+{% endblock %}

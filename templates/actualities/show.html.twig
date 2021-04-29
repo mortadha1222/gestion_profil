@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualities{% endblock %}
+
+{% block body %}
+    <h1>Actualities</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdAct</th>
+                <td>{{ actuality.idAct }}</td>
+            </tr>
+            <tr>
+                <th>TitleAct</th>
+                <td>{{ actuality.titleAct }}</td>
+            </tr>
+            <tr>
+                <th>DateAct</th>
+                <td>{{ actuality.dateAct }}</td>
+            </tr>
+            <tr>
+                <th>DescriptionAct</th>
+                <td>{{ actuality.descriptionAct }}</td>
+            </tr>
+            <tr>
+                <th>PhotoAct</th>
+                <td>{{ actuality.photoAct }}</td>
+            </tr>
+            <tr>
+                <th>IdMember</th>
+                <td>{{ actuality.idMember }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('actualities_index') }}">back to list</a>
+
+    <a href="{{ path('actualities_edit', {'idAct': actuality.idAct}) }}">edit</a>
+
+    {{ include('actualities/_delete_form.html.twig') }}
+{% endblock %}
